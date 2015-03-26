@@ -82,8 +82,12 @@ public class Game {
     }
 
     public void playAt(int position) {
-        bord.putMarkAt(position, turn.getMark());
-        ChangeTurn();
+        if(bord.isPositionAllowed(position)){
+            bord.putMarkAt(position, turn.getMark());
+            ChangeTurn();
+            return ;
+        }
+        System.out.println("can not play at Position");
     }
 
     private void ChangeTurn() {

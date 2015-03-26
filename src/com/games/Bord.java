@@ -48,4 +48,11 @@ public class Bord {
                 "4 5 6\n" +
                 "7 8 9\n";
     }
+
+    public boolean isPositionAllowed(int position) {
+        if(position>0&&position<=9){
+            if(cells[position-1]=='-') return  true;
+        }
+        return  false;
+    }
 }

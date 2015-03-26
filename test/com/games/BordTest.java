@@ -23,7 +23,13 @@ public class BordTest {
         b.putMarkAt(2,'X');
         equalsFile("Bord String", "filledBord", b.toString());
     }
-
+    @Test
+    public void test_alreadyMarkPositionIsNotAllowed() throws IOException {
+        Bord b = new Bord();
+       assertTrue(b.isPositionAllowed(2));
+        b.putMarkAt(2,'X');
+        assertFalse( b.isPositionAllowed(2));
+    }
     @Test
     public void test_newBordIsBlank() throws IOException {
         Bord b = new Bord();
