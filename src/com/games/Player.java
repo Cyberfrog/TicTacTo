@@ -1,12 +1,9 @@
 package com.games;
 
-/**
- * Created by gauravd on 3/21/2015.
- */
 public class Player {
-    private char mark;
+    private Signiture mark;
 
-    public Player(char mark) {
+    public Player(Signiture mark) {
         this.mark = mark;
     }
 
@@ -15,7 +12,7 @@ public class Player {
         return "Player{"+mark+"}";
     }
 
-    public char getMark() {
+    public Signiture getMark() {
         return mark;
     }
 }

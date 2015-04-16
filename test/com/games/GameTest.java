@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by gauravd on 3/21/2015.
@@ -64,7 +62,7 @@ public class GameTest {
         g1.playAt(6);
         g1.playAt(9);
         g1.playAt(8);
-       assertTrue(g1.isFinished());
+        assertFalse(g1.isNotFinished());
     }@Test
     public void test_WiningststusOnListMoveWin() throws IOException {
         Game g1 = new Game();
@@ -92,7 +90,7 @@ public class GameTest {
         BordTest.equalsFile("GameState", "GameWinState", g1.getState());
     }
     @Test
-    public void test_isFinished_if_gameHasWon() throws IOException {
+    public void test_gameIsFinished_if_gameHasWon() throws IOException {
         Game g1 = new Game();
         g1.playAt(1);
         g1.playAt(2);
@@ -101,12 +99,12 @@ public class GameTest {
         g1.playAt(5);
         g1.playAt(6);
         g1.playAt(7);
-        assertTrue(g1.isFinished());
+        assertFalse(g1.isNotFinished());
     }
     @Test
     public void test_initialy_game_isNotFinished() throws IOException {
         Game g1 = new Game();
-        assertFalse(g1.isFinished());
+        assertTrue(g1.isNotFinished());
     }
     @Test
     public void test_GameBanner() throws IOException {

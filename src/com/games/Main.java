@@ -9,9 +9,9 @@ public class Main {
         Scanner s =new Scanner(System.in);
         System.out.println(Game.getBanner());
        do {
-           System.out.println("Enter Position:");
+           System.out.println("\nEnter Position:");
             g1.playAt(s.nextInt());
             System.out.println(g1.getState());
-        }while (!g1.isFinished());
+       } while (g1.isNotFinished());
     }
 }

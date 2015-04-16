@@ -4,48 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by gauravd on 3/21/2015.
- */
+
 public class Game {
-    private Player turn;
+    private static final List<List<Integer>> winigPositions = getWiningPositions();
     private final Player p1;
     private final Player p2;
     private final Bord bord;
-    private static final List<List<Integer>> winigPositions = getWiningPositions();
+    private Player turn;
 
 
     public Game() {
-        p1 = new Player('X');
-        p2 = new Player('O');
+        p1 = new Player(Signiture.X);
+        p2 = new Player(Signiture.O);
         turn = p1;
         bord = new Bord();
-    }
-
-    public String getState() {
-        if (hasWon(lastTurn())) {
-            return  bord.toString()+"Winner : " + lastTurn();
-        }
-        if (isOver()) {
-            return "Game Over :\n" + bord.toString();
-        }
-
-        return "Turn: " + turn + "\n"
-                + bord.toString();
-    }
-
-    private Player lastTurn() {
-        return turn.equals(p1) ? p2 : p1;
-    }
-
-    private boolean hasWon(Player player) {
-        List<Integer> positions = bord.getAllPositions(lastTurn().getMark());
-        for (List<Integer> winigPosition : winigPositions) {
-            if (positions.containsAll(winigPosition)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static List<List<Integer>> getWiningPositions() {
@@ -69,12 +41,43 @@ public class Game {
         return winigPositions;
     }
 
+    public static String getBanner() {
+        return "*******************\n" +
+                "* Tic - Tac - Toe *\n" +
+                "*******************\n" + Bord.PositionHelp();
+    }
+
+    public String getState() {
+        if (hasWon(lastTurn())) {
+            return bord.toString() + "Winner : " + lastTurn();
+        }
+        if (isOver()) {
+            return bord.toString() + "Game Over :\n";
+        }
+
+        return bord.toString() + "Turn: " + turn;
+    }
+
+    private Player lastTurn() {
+        return turn.equals(p1) ? p2 : p1;
+    }
+
+    private boolean hasWon(Player player) {
+        List<Integer> positions = bord.getAllPositions(lastTurn().getMark());
+        for (List<Integer> winigPosition : winigPositions) {
+            if (positions.containsAll(winigPosition)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isOver() {
         return bord.isFilled();
     }
 
-    public boolean isFinished() {
-        return isOver() || hasWon(lastTurn());
+    public boolean isNotFinished() {
+        return !(isOver() || hasWon(lastTurn()));
     }
 
     public String whosTurn() {
@@ -92,10 +95,5 @@ public class Game {
 
     private void ChangeTurn() {
         turn = turn.equals(p1) ? p2 : p1;
-    }
-    public  static String getBanner(){
-        return "*******************\n" +
-                "* Tic - Tac - Toe *\n" +
-                "*******************\n"+Bord.PositionHelp();
     }
 }
