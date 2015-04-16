@@ -10,7 +10,10 @@ public class Main {
         System.out.println(Game.getBanner());
        do {
            System.out.println("\nEnter Position:");
-            g1.playAt(s.nextInt());
+           if (!g1.playAt(s.nextInt())) {
+               System.out.println("can not play at Position");
+           }
+           ;
             System.out.println(g1.getState());
        } while (g1.isNotFinished());
     }

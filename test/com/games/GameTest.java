@@ -110,4 +110,19 @@ public class GameTest {
     public void test_GameBanner() throws IOException {
       BordTest.equalsFile("GameBanner","GameBanner",Game.getBanner());
     }
+
+    @Test
+    public void test_playAt_returns_true_on_SuccessFull_Marking() {
+        Game g1 = new Game();
+        assertTrue(g1.playAt(2));
+
+    }
+
+    @Test
+    public void test_playAt_returns_False_on_UnSuccessFull_Marking() {
+        Game g1 = new Game();
+        g1.playAt(2);
+        assertFalse(g1.playAt(2));
+
+    }
 }

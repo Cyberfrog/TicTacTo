@@ -84,13 +84,14 @@ public class Game {
         return turn.toString();
     }
 
-    public void playAt(int position) {
-        if(bord.isPositionAllowed(position)){
-            bord.putMarkAt(position, turn.getMark());
-            ChangeTurn();
-            return ;
-        }
-        System.out.println("can not play at Position");
+    public boolean playAt(int position) {
+        return bord.isPositionAllowed(position) && putMark(position);
+    }
+
+    private boolean putMark(int position) {
+        bord.putMarkAt(position, turn.getMark());
+        ChangeTurn();
+        return true;
     }
 
     private void ChangeTurn() {
