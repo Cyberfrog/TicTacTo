@@ -7,19 +7,20 @@ import java.util.List;
 
 public class Game {
     private static final List<List<Integer>> winigPositions = getWiningPositions();
-    private final Player p1;
-    private final Player p2;
-    private final Bord bord;
-    private Player turn;
+    private final Player playerX;
+    private final Player playerO;
+    private final Board board;
+    private Player currentPlayer;
 
 
     public Game() {
-        p1 = new Player(Signiture.X);
-        p2 = new Player(Signiture.O);
-        turn = p1;
-        bord = new Bord();
+        playerX = new Player(Signiture.X);
+        playerO = new Player(Signiture.O);
+        currentPlayer = playerX;
+        board = new Board();
     }
 
+    // move it to  constant class
     private static List<List<Integer>> getWiningPositions() {
         List<List<Integer>> winigPositions = new ArrayList<List<Integer>>();
         Integer a[] = {1, 2, 3};
@@ -44,26 +45,26 @@ public class Game {
     public static String getBanner() {
         return "*******************\n" +
                 "* Tic - Tac - Toe *\n" +
-                "*******************\n" + Bord.PositionHelp();
+                "*******************\n" + Board.PositionHelp();
     }
 
     public String getState() {
         if (hasWon(lastTurn())) {
-            return bord.toString() + "Winner : " + lastTurn();
+            return board.toString() + "Winner : " + lastTurn();
         }
         if (isOver()) {
-            return bord.toString() + "Game Over :\n";
+            return board.toString() + "Game Over :\n";
         }
 
-        return bord.toString() + "Turn: " + turn;
+        return board.toString() + "Turn: " + currentPlayer;
     }
 
     private Player lastTurn() {
-        return turn.equals(p1) ? p2 : p1;
+        return currentPlayer.equals(playerX) ? playerO : playerX;
     }
 
     private boolean hasWon(Player player) {
-        List<Integer> positions = bord.getAllPositions(lastTurn().getMark());
+        List<Integer> positions = board.getAllPositions(player.getMark());
         for (List<Integer> winigPosition : winigPositions) {
             if (positions.containsAll(winigPosition)) {
                 return true;
@@ -73,28 +74,32 @@ public class Game {
     }
 
     private boolean isOver() {
-        return bord.isFilled();
+        return board.isFilled();
     }
 
-    public boolean isNotFinished() {
-        return !(isOver() || hasWon(lastTurn()));
+    public boolean isFinished() {
+        return isOver() || hasWon(lastTurn());
     }
 
-    public String whosTurn() {
-        return turn.toString();
+    public Player whosTurn() {
+        return currentPlayer;
     }
 
     public boolean playAt(int position) {
-        return bord.isPositionAllowed(position) && putMark(position);
+        return putMark(position) && ChangeTurn();
     }
 
     private boolean putMark(int position) {
-        bord.putMarkAt(position, turn.getMark());
-        ChangeTurn();
+        if (board.isPositionAllowed(position)) {
+            board.putMarkAt(position, currentPlayer.getMark());
         return true;
+        }
+        return false;
     }
+//return player will make it teastable
 
-    private void ChangeTurn() {
-        turn = turn.equals(p1) ? p2 : p1;
+    private boolean ChangeTurn() {
+        currentPlayer = currentPlayer.equals(playerX) ? playerO : playerX;
+        return !currentPlayer.equals(lastTurn());
     }
 }

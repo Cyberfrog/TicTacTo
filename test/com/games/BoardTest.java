@@ -12,44 +12,46 @@ import static org.junit.Assert.*;
 /**
  * Created by gauravd on 3/21/2015.
  */
-public class BordTest {
+public class BoardTest {
     private static final String GOLD_PATH = "test/data";
 
-    public static void equalsFile(String message, String fileName, String actualValue) throws IOException {
+    public static void equalsFile(String fileName, String actualValue) throws IOException {
         BufferedReader file = new BufferedReader(new FileReader(GOLD_PATH + '/' + fileName));
         BufferedReader actualStream = new BufferedReader(new StringReader(actualValue));
         String thisFileLine;
         int i = 0;
         while ((thisFileLine = file.readLine()) != null) {
             i++;
-            assertEquals("in file:" + fileName + "At :" + i, thisFileLine, actualStream.readLine());
+            String message = "in file:" + fileName + "At :" + i;
+            assertEquals(message, thisFileLine, actualStream.readLine());
         }
     }
 
     @Test
     public void test_bordIsAbletoPutMarkOnItsCell() throws IOException {
-        Bord b = new Bord();
+        Board b = new Board();
         b.putMarkAt(2, Signiture.X);
-        equalsFile("Bord String", "filledBord", b.toString());
+        equalsFile("filledBord", b.toString());
     }
 
     @Test
     public void test_alreadyMarkPositionIsNotAllowed() throws IOException {
-        Bord b = new Bord();
-       assertTrue(b.isPositionAllowed(2));
+        Board b = new Board();
+        assertTrue(b.isPositionAllowed(2));
+
         b.putMarkAt(2, Signiture.X);
         assertFalse(b.isPositionAllowed(2));
     }
 
     @Test
     public void test_newBordIsBlank() throws IOException {
-        Bord b = new Bord();
-        equalsFile("BlankBord String", "BlankBord", b.toString());
+        Board b = new Board();
+        equalsFile("BlankBord", b.toString());
     }
 
     @Test
     public void test_isFilledReturnsFalseIfWholeBordIsNotFilled() throws IOException {
-        Bord b = new Bord();
+        Board b = new Board();
         b.putMarkAt(1, Signiture.X);
         b.putMarkAt(8, Signiture.X);
         b.putMarkAt(9, Signiture.X);
@@ -58,7 +60,7 @@ public class BordTest {
 
     @Test
     public void test_isFilledReturnsTrueIfWholeBordIsFilled() throws IOException {
-        Bord b = new Bord();
+        Board b = new Board();
         b.putMarkAt(1, Signiture.X);
         b.putMarkAt(2, Signiture.X);
         b.putMarkAt(3, Signiture.X);

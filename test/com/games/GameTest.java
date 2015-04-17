@@ -13,27 +13,27 @@ public class GameTest {
     @Test
     public void test_GameFirstTurnIsOfPlayerOne() {
         Game g1 = new Game();
-        String p = g1.whosTurn();
-        assertEquals("Player{X}",p);
+        Player p = g1.whosTurn();
+        assertEquals(new Player(Signiture.X), p);
     }
 
     @Test
     public void test_GamePutsMarkOfPlayerWhosTurn() throws IOException {
         Game g1 = new Game();
         g1.playAt(3);
-        BordTest.equalsFile("GameState", "gameStateChanged", g1.getState());
+        BoardTest.equalsFile("gameStateChanged", g1.getState());
     }
     @Test
     public void test_GameInitialIsBlank() throws IOException {
         Game g1 = new Game();
-        BordTest.equalsFile("GameState", "NewGameState", g1.getState());
+        BoardTest.equalsFile("NewGameState", g1.getState());
     }
 
     @Test
     public void test_playAt_changes_Turn_afterPlaying(){
         Game g1 = new Game();
         g1.playAt(3);
-        assertEquals("Player{O}", g1.whosTurn());
+        assertEquals(new Player(Signiture.O), g1.whosTurn());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class GameTest {
         g1.playAt(6);
         g1.playAt(9);
         g1.playAt(8);
-        BordTest.equalsFile("GameState", "GameOverState", g1.getState());
+        BoardTest.equalsFile("GameOverState", g1.getState());
     }
     @Test
     public void test_game_isFinished_on_GameOver_() throws IOException {
@@ -62,7 +62,7 @@ public class GameTest {
         g1.playAt(6);
         g1.playAt(9);
         g1.playAt(8);
-        assertFalse(g1.isNotFinished());
+        assertTrue(g1.isFinished());
     }@Test
     public void test_WiningststusOnListMoveWin() throws IOException {
         Game g1 = new Game();
@@ -75,7 +75,7 @@ public class GameTest {
         g1.playAt(8);
         g1.playAt(9);
         g1.playAt(7);
-       BordTest.equalsFile("LastMoveWin","GameWinOnLastMove",g1.getState());
+        BoardTest.equalsFile("GameWinOnLastMove", g1.getState());
     }
     @Test
     public void test_GameWinStatus() throws IOException {
@@ -87,7 +87,7 @@ public class GameTest {
         g1.playAt(5);
         g1.playAt(6);
         g1.playAt(7);
-        BordTest.equalsFile("GameState", "GameWinState", g1.getState());
+        BoardTest.equalsFile("GameWinState", g1.getState());
     }
     @Test
     public void test_gameIsFinished_if_gameHasWon() throws IOException {
@@ -99,16 +99,16 @@ public class GameTest {
         g1.playAt(5);
         g1.playAt(6);
         g1.playAt(7);
-        assertFalse(g1.isNotFinished());
+        assertTrue(g1.isFinished());
     }
     @Test
     public void test_initialy_game_isNotFinished() throws IOException {
         Game g1 = new Game();
-        assertTrue(g1.isNotFinished());
+        assertFalse(g1.isFinished());
     }
     @Test
     public void test_GameBanner() throws IOException {
-      BordTest.equalsFile("GameBanner","GameBanner",Game.getBanner());
+        BoardTest.equalsFile("GameBanner", Game.getBanner());
     }
 
     @Test

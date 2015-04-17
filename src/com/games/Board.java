@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Bord {
+public class Board {
     Signiture cells[] = new Signiture[9];
 
-    public Bord() {
+    public Board() {
         Arrays.fill(cells, Signiture._);
     }
 
@@ -33,7 +33,7 @@ public class Bord {
     }
 
     public boolean isFilled() {
-        return !(toString().contains(Signiture._.toString()));
+        return Arrays.binarySearch(cells, Signiture._) < 0;
     }
 
     public List<Integer> getAllPositions(Signiture mark) {
